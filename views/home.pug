@@ -3,8 +3,28 @@ extends layout
 block content
 
   body
-    div(class="container")
-      h1(class="title") Vinylist
-      p(class="subtitle") A vinyl gift registry
 
-      hr
+    div(class="container")
+      h1(class="linear has-text-centered") Celebrate our love
+      h1(class="linear has-text-centered") with an album you love
+
+    div(class="container is-max-desktop has-background-primary-light box")
+      p(class="subtitle")
+        | We've got a record player, a couple milk crates, and a lifetime of
+        | chill afternoons to listen. Help us build a vinyl collection!
+      p(class="subtitle")
+        | If you have a favorite album that you would love to gift us, feel free
+        | to mark it here, and let other people know you called dibs.
+      p We won't peek!
+
+
+    div(class="container is-max-desktop has-background-primary-light box")
+      form(action="")
+        div(class="field is-grouped")
+
+          div(class="control is-expanded has-icons-left")
+            input(class="input is-primary is-rounded" placeholder="Artist or Title")
+            span(class="icon is-small is-left")
+              i(class="fas fa-search")
+          div(class="control")
+            button(class="button is-primary" type="submit") Search
