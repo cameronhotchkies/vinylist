@@ -23,8 +23,7 @@
   "scripts": {
     "build-sass": "sass src/public/css/main.scss dist/public/css/main.css",
     "build-ts": "tsc",
-    "build": "yarn run build-sass && yarn run build-ts && yarn run copy-static-assets",
-    "copy-static-assets": "ts-node copyStaticAssets.ts",
+    "build": "yarn run build-sass && yarn run build-ts",
     "serve": "node dist/server.js",
     "watch-node": "nodemon dist/server.js",
     "watch-sass": "sass --watch src/public/css/main.scss dist/public/css/main.css",
