@@ -19,11 +19,14 @@ block content
 
 
     div(class="container is-max-desktop has-background-primary-light box")
-      form(action="")
+      form(action="/search", method="POST")
         div(class="field is-grouped")
 
           div(class="control is-expanded has-icons-left")
-            input(class="input is-primary is-rounded" placeholder="Artist or Title")
+            input(class="input is-primary is-rounded",
+                  placeholder="Artist or Title",
+                  name="q",
+                  )
             span(class="icon is-small is-left")
               i(class="fas fa-search")
           div(class="control")

@@ -6,6 +6,7 @@ import path from 'path';
 
 // Controllers
 import * as homeController from './controllers/home';
+import * as searchController from './controllers/search';
 
 // Create Express server
 const app = express();
@@ -25,5 +26,6 @@ app.use(
 app.use('/css', express.static('css'));
 
 app.get('/', homeController.index);
+app.post('/search', searchController.search);
 
 export default app;
