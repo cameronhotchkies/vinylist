@@ -5,10 +5,13 @@ block content
   body
 
     div(class="container")
-      h1(class="linear has-text-centered") Celebrate our love
+      h1(class="linear has-text-centered") Celebrate our love,
       h1(class="linear has-text-centered") with an album you love
 
 
     div(class="container is-max-desktop has-background-primary-light box")
-      span(class="escapee") #{searchTerm}
-      p Search Results for #{searchTerm}: TODO
+      p Search Results for "#{searchTerm}":
+      br
+      ul
+        for result in results
+          li #{result}
