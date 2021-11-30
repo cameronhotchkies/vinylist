@@ -14,5 +14,15 @@ block content
       br
       ul
         for result in results
-          li #{result.title}
-          img(src=result.coverUrl, class="album-art")
+          div(class="columns")
+            div(class="column" style="text-align:right;")
+              img(src=result.coverUrl, class="album-art")
+            div(class="column is-two-thirds")
+              li #{result.title}
+              if result.unowned
+                button(class="button is-rounded")
+                  span(class="icon")
+                    i(class="fas fa-gift")
+                  span Gift it
+              else
+                button(class="button is-rounded" disabled) already in collection

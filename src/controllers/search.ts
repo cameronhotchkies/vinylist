@@ -28,7 +28,9 @@ export const dedupeSearchResults = (
       const primaryId = `${n.master_id}`;
       const existing = acc.get(primaryId);
 
-      if (!existing) {
+      const { in_collection: inCollection } = n.user_data;
+
+      if (!existing || inCollection) {
         acc.set(primaryId, n);
       } else {
         acc.set(
@@ -73,17 +75,16 @@ const searchTitles = (searchTerms: string): Promise<CompactAlbum[]> => {
     return deduped.map((searchResult) => {
       const {
         title,
-        community,
-        master_id: masterId,
-        id,
         thumb,
+        user_data: userData,
       } = searchResult;
 
-      const processed = `${title} [have: ${community.have}] <Id: ${id} : primaryId: ${masterId}>`;
+      const unowned = !userData.in_collection;
 
       return {
-        title: processed,
+        title,
         coverUrl: thumb,
+        unowned,
       };
     });
   });

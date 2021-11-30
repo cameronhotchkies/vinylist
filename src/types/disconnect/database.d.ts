@@ -3,6 +3,10 @@ export type Community = {
   have: number;
 }
 
+type UserData = {
+  in_wantlist: boolean;
+  in_collection: boolean;
+}
 export interface SearchResult {
   country: string;
   year: string;
@@ -13,6 +17,7 @@ export interface SearchResult {
   community: Community;
   master_id: number;
   thumb: string;
+  user_data: UserData;
 }
 
 export type SearchResponse = {
