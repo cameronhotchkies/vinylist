@@ -1,8 +1,8 @@
-import { Auth } from './auth';
+import type { TokenAuth } from './auth';
 import { Database } from './database';
 
 export declare class Client {
-  constructor(auth: Auth?);
+  constructor(auth?: TokenAuth);
 
   database: () => Database;
 

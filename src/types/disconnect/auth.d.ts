@@ -1,3 +1,3 @@
-export declare type Auth = {
+export declare type TokenAuth = {
   userToken: string;
 }
