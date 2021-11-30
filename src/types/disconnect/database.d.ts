@@ -12,6 +12,7 @@ export interface SearchResult {
   title: string;
   community: Community;
   master_id: number;
+  thumb: string;
 }
 
 export type SearchResponse = {

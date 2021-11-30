@@ -14,4 +14,5 @@ block content
       br
       ul
         for result in results
-          li #{result}
+          li #{result.title}
+          img(src=result.coverUrl, class="album-art")

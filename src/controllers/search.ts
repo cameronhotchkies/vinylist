@@ -45,7 +45,12 @@ export const dedupeSearchResults = (
   return Array.from(reduced.values());
 };
 
-const searchTitles = (searchTerms: string): Promise<string[]> => {
+type CompactAlbum = {
+  title: string,
+  coverUrl: string,
+}
+
+const searchTitles = (searchTerms: string): Promise<CompactAlbum[]> => {
   const discogsAuth = {
     userToken: process.env.DISCOGS_TOKEN,
   };
@@ -71,11 +76,15 @@ const searchTitles = (searchTerms: string): Promise<string[]> => {
         community,
         master_id: masterId,
         id,
+        thumb,
       } = searchResult;
 
       const processed = `${title} [have: ${community.have}] <Id: ${id} : primaryId: ${masterId}>`;
 
-      return processed;
+      return {
+        title: processed,
+        coverUrl: thumb,
+      };
     });
   });
 };
@@ -91,7 +100,7 @@ export const search = (req: Request<{}, {}, SearchRequest>, res: Response) => {
 
   const asyncSearchResult = searchTitles(searchContent);
 
-  asyncSearchResult.then((searchResult: string[]) => {
+  asyncSearchResult.then((searchResult: CompactAlbum[]) => {
     res.render('search', {
       title: 'Search Results',
       searchTerm: searchContent,

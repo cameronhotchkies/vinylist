@@ -17,3 +17,9 @@ $primary-invert: $black; // $pink-invert;
 }
 
 @import "../../../node_modules/bulma/bulma.sass";
+
+.album-art {
+  border-color: peachpuff;
+  border-width: medium;
+  border-style: inset;
+}

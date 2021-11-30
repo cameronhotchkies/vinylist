@@ -21,6 +21,7 @@ describe('Search controller', () => {
         want: 20,
       },
       master_id: 19,
+      thumb: '24',
     };
 
     const sr1Dupe = {
