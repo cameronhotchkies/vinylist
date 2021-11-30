@@ -3,7 +3,7 @@ export type Community = {
   have: number;
 }
 
-export type SearchResult = {
+export interface SearchResult {
   country: string;
   year: string;
   format: string[];
@@ -29,5 +29,3 @@ export declare class Database {
    */
   search(query: string, params: any, callback?: () => void): Promise<SearchResponse>;
 }
-
-export default Database;

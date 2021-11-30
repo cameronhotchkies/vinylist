@@ -1,6 +1,7 @@
+import _ from 'lodash';
 import { Request, Response } from 'express';
 
-import { Client as Discogs } from 'disconnect';
+import { Client as Discogs, SearchResult } from 'disconnect';
 
 /**
  * @typedef SearchRequest
@@ -9,6 +10,40 @@ import { Client as Discogs } from 'disconnect';
 type SearchRequest = {
   q: string,
 }
+
+export const dedupeSearchResults = (
+  results: SearchResult[],
+): SearchResult[] => {
+  type ReduceMap = Map<string, SearchResult>;
+
+  const init: ReduceMap = new Map();
+
+  const mostCommon = (a: SearchResult, b: SearchResult) => (
+    (a.community.have > b.community.have) ? a : b
+  );
+
+  const reduced = _.reduce(
+    results,
+    (acc: ReduceMap, n: SearchResult) => {
+      const primaryId = `${n.master_id}`;
+      const existing = acc.get(primaryId);
+
+      if (!existing) {
+        acc.set(primaryId, n);
+      } else {
+        acc.set(
+          primaryId,
+          mostCommon(existing, n),
+        );
+      }
+
+      return acc;
+    },
+    init,
+  );
+
+  return Array.from(reduced.values());
+};
 
 const searchTitles = (searchTerms: string): Promise<string[]> => {
   const discogsAuth = {
@@ -28,7 +63,9 @@ const searchTitles = (searchTerms: string): Promise<string[]> => {
   return result.then((response) => {
     const { results } = response;
 
-    return results.map((searchResult) => {
+    const deduped = dedupeSearchResults(results);
+
+    return deduped.map((searchResult) => {
       const {
         title,
         community,

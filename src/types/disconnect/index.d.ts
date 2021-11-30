@@ -1,4 +1,5 @@
 export * from './client';
-export * from './database';
+export * as Database from './database';
+export { SearchResult } from './database';
 
 declare module 'disconnect' {}
