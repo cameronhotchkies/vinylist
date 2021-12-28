@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import { Request, Response } from 'express';
 
-import { Client as Discogs, SearchResult } from 'disconnect';
-
+import { Client as Discogs, Release, SearchResult } from 'disconnect';
 /**
  * @typedef SearchRequest
  * @property string q - The search query terms.
@@ -11,20 +10,22 @@ type SearchRequest = {
   q: string,
 }
 
+type ReleaseResult = (SearchResult & Release);
+
 export const dedupeSearchResults = (
-  results: SearchResult[],
-): SearchResult[] => {
-  type ReduceMap = Map<string, SearchResult>;
+  results: ReleaseResult[],
+): ReleaseResult[] => {
+  type ReduceMap = Map<string, ReleaseResult>;
 
   const init: ReduceMap = new Map();
 
-  const mostCommon = (a: SearchResult, b: SearchResult) => (
+  const mostCommon = (a: ReleaseResult, b: ReleaseResult) => (
     (a.community.have > b.community.have) ? a : b
   );
 
   const reduced = _.reduce(
     results,
-    (acc: ReduceMap, n: SearchResult) => {
+    (acc: ReduceMap, n: ReleaseResult) => {
       const primaryId = `${n.master_id}`;
       const existing = acc.get(primaryId);
 
@@ -77,6 +78,8 @@ const searchTitles = (searchTerms: string): Promise<CompactAlbum[]> => {
         title,
         thumb,
         user_data: userData,
+        id: albumId,
+        master_id: rootId,
       } = searchResult;
 
       const unowned = !userData.in_collection;
@@ -85,6 +88,8 @@ const searchTitles = (searchTerms: string): Promise<CompactAlbum[]> => {
         title,
         coverUrl: thumb,
         unowned,
+        albumId,
+        rootId,
       };
     });
   });

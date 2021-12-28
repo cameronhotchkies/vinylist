@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+  body
+
+    div(class="container")
+      h1(class="linear has-text-centered") Celebrate our love,
+      h1(class="linear has-text-centered") with an album you love
+
+
+    div(class="container is-max-desktop has-background-primary-light box")
+      div(class="columns")
+        div(class="column")
+          img(src=albumImage, alt="cover art")
+        div(class="column")
+          span
+            h2(class="title is-2") #{selectedArtist}
+            h1(class="title is-1") #{selectedTitle}
+            div(class="block")
+              | Mark the album as purchased, so other people know it has
+              | been gifted.
+            div(class="block")
+              | (Actually tracking down a copy and delivering it
+              | is still on you)
+            div(class="has-text-centered")
+              button(class="button is-rounded centered", submit)
+                    span(class="icon")
+                      i(class="fas fa-gift")
+                    span Register Gift

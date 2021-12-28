@@ -20,9 +20,12 @@ block content
             div(class="column is-two-thirds")
               li #{result.title}
               if result.unowned
-                button(class="button is-rounded")
-                  span(class="icon")
-                    i(class="fas fa-gift")
-                  span Gift it
+                form(action="/album", method="POST")
+                  input(type="hidden", name="albumId", value=result.albumId)
+                  input(type="hidden", name="rootId", value=result.rootId)
+                  button(class="button is-rounded", submit)
+                    span(class="icon")
+                      i(class="fas fa-gift")
+                    span Gift it
               else
                 button(class="button is-rounded" disabled) already in collection

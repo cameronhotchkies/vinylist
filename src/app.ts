@@ -7,6 +7,7 @@ import path from 'path';
 // Controllers
 import * as homeController from './controllers/home';
 import * as searchController from './controllers/search';
+import * as giftAlbumController from './controllers/giftAlbum';
 
 // Create Express server
 const app = express();
@@ -27,5 +28,6 @@ app.use('/css', express.static('css'));
 
 app.get('/', homeController.index);
 app.post('/search', searchController.search);
+app.post('/album', giftAlbumController.giftAlbum);
 
 export default app;
