@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { Identity } from './auth';
 import { Collection } from './collection';
 
@@ -15,5 +16,3 @@ export declare class User {
    */
   getIdentity: () => Promise<Identity>;
 }
-
-export default { User }

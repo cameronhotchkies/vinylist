@@ -25,5 +25,3 @@ export declare class Collection {
    */
   addRelease(user: string, folder: number, release: number): Promise<any>
 }
-
-export default { Collection };
