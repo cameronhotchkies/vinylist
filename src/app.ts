@@ -29,5 +29,6 @@ app.use('/css', express.static('css'));
 app.get('/', homeController.index);
 app.post('/search', searchController.search);
 app.post('/album', giftAlbumController.giftAlbum);
+app.post('/album/confirm', giftAlbumController.confirmGiftAlbum);
 
 export default app;

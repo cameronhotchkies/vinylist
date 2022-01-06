@@ -24,7 +24,10 @@ block content
               | (Actually tracking down a copy and delivering it
               | is still on you)
             div(class="has-text-centered")
-              button(class="button is-rounded centered", submit)
-                    span(class="icon")
-                      i(class="fas fa-gift")
-                    span Register Gift
+              form(action="/album/confirm" method="POST")
+                input(type="hidden", name="albumId", value=albumId)
+                input(type="hidden", name="releaseId", value=releaseId)
+                button(class="button is-rounded centered", submit)
+                      span(class="icon")
+                        i(class="fas fa-gift")
+                      span Register Gift
