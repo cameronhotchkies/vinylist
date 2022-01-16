@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import {
   Client as Discogs,
   Folder,
-  MasterRelease,
   Release,
   User,
 } from 'disconnect';
@@ -25,8 +24,28 @@ const getRelease = (albumId: number, rootId: number): Promise<Release> => {
 
   const resolvedReleaseIdResult: Promise<number> = (rootId === 0)
     ? Promise.resolve(albumId)
-    : db.getMaster(rootId)
-      .then((response: MasterRelease) => response.main_release);
+    : db.getMasterVersions(rootId)
+      .then((response) => {
+        const { versions } = response;
+
+        // Filter out any non-vinyl versions
+        const vinylReleases = versions
+          .filter((release) => {
+            const { major_formats: majorFormats } = release;
+            const filterResult = majorFormats.includes('Vinyl');
+            return filterResult;
+          });
+
+        // Gather the most common vinyl version
+        const mostCommon = vinylReleases.reduce((prev, curr) => {
+          const prevHave = prev.stats.community.have;
+          const currHave = curr.stats.community.have;
+
+          return (prevHave >= currHave) ? prev : curr;
+        });
+
+        return mostCommon.id;
+      });
 
   const releaseResult = resolvedReleaseIdResult
     .then((releaseId) => db.getRelease(releaseId));

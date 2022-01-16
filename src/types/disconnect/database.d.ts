@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import type {
-  Artist, Community, Company, Format, Identifier, Image, Label, Series,
+  Artist, Community, CommunityMember, Company, Format, Identifier, Image, Label, Series,
 } from './discogs';
 
 type UserData = {
@@ -30,6 +31,21 @@ export interface Release {
   images: Image[];
   thumb: string;
 }
+export interface ReleaseVersion {
+  id: number;
+  label: string;
+  country: string;
+  title: string,
+  major_formats: string[],
+  format: string;
+  catno: string;
+  released: string;
+  status: string;
+  resource_url: string;
+  thumb: string;
+  stats: { community: Community, user: CommunityMember };
+}
+
 export interface MasterRelease {
   id: number;
   main_release: number;
@@ -42,6 +58,7 @@ export interface MasterRelease {
   num_for_sale: number;
   lowest_price: number;
   images: Image[];
+  versions: ReleaseVersion[];
 }
 export interface SearchResult {
   user_data: UserData;
@@ -52,6 +69,10 @@ export type SearchResponse = {
   results: (Release & SearchResult)[];
 }
 
+export type MasterVersionsResponse = {
+  versions: ReleaseVersion[]
+}
+
 export declare class Database {
   /**
    * Get master release data
@@ -60,6 +81,17 @@ export declare class Database {
    * @return {DiscogsClient|Promise}
    */
   getMaster(master: number, callback?: () => void): Promise<MasterRelease>;
+
+  /**
+   * Get the release versions contained in the given master release
+   * @param {(number|string)} master - The Discogs master release ID
+   * @param {object} [params] - optional pagination params
+   * @param {function} [callback] - Callback function
+   * @return {Promise<MasterVersionsResponse>}
+   */
+  getMasterVersions(
+    master: number, params?: any, callback?: () => void
+  ): Promise<MasterVersionsResponse>;
 
   /**
    * Get release data
