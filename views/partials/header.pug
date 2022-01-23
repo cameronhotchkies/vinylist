@@ -1,1 +1,7 @@
 div(class="navigation")
+  div(class="has-text-centered")
+    if !isRootPage
+      a(href="/")
+        span(class="icon")
+          i(class="fas fa-undo-alt")
+        span Start over
